@@ -7,7 +7,7 @@ local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
 -- Texto pedido
-local mensagem = "o crackado n funfa mais. Anteciosamente, Zandona KKKKK"
+local mensagem = "o crackado n funfa mais. Anteciosamente, Zandona KKKKK\nSE VC COMPROU E QUER USAR ABRE TICKET QUE VOU ARRUMAR (RIMEI SE QUERER)"
 
 -- Criar ScreenGui
 local screenGui = Instance.new("ScreenGui")
