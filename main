@@ -1,3 +1,4 @@
+--chat gp fez essa desgraca
 -- LocalScript (colocar em StarterPlayerScripts ou StarterGui)
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
