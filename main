@@ -1,1 +1,104 @@
-mkdxmk
+-- LocalScript (colocar em StarterPlayerScripts ou StarterGui)
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Texto pedido
+local mensagem = "o crackado n funfa mais. Anteciosamente, Zandona KKKKK"
+
+-- Criar ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "ZandonaMensagemGui"
+screenGui.ResetOnSpawn = true
+screenGui.Parent = playerGui
+
+-- Fundo escuro sem bloqueio total (opcional)
+local background = Instance.new("Frame")
+background.Name = "Background"
+background.Size = UDim2.new(1, 0, 1, 0)
+background.Position = UDim2.new(0, 0, 0, 0)
+background.BackgroundTransparency = 0.6
+background.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+background.Parent = screenGui
+
+-- Container central
+local container = Instance.new("Frame")
+container.Name = "Container"
+container.Size = UDim2.new(0, 600, 0, 150)
+container.Position = UDim2.new(0.5, -300, 0.35, 0)
+container.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+container.BorderSizePixel = 0
+container.AnchorPoint = Vector2.new(0, 0)
+container.Parent = screenGui
+container.Rotation = 0
+container.BackgroundTransparency = 0.05
+container.ClipsDescendants = true
+
+-- Borda arredondada (UICorner)
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = container
+
+-- Título / Texto
+local label = Instance.new("TextLabel")
+label.Name = "Mensagem"
+label.Size = UDim2.new(1, -20, 1, -20)
+label.Position = UDim2.new(0, 10, 0, 10)
+label.BackgroundTransparency = 1
+label.Text = mensagem
+label.TextWrapped = true
+label.TextScaled = false
+label.Font = Enum.Font.GothamBold
+label.TextSize = 28
+label.TextColor3 = Color3.fromRGB(255, 230, 120)
+label.TextXAlignment = Enum.TextXAlignment.Center
+label.TextYAlignment = Enum.TextYAlignment.Center
+label.Parent = container
+
+-- Botão fechar
+local closeBtn = Instance.new("TextButton")
+closeBtn.Name = "Fechar"
+closeBtn.Size = UDim2.new(0, 100, 0, 36)
+closeBtn.Position = UDim2.new(1, -110, 1, -46)
+closeBtn.AnchorPoint = Vector2.new(0, 0)
+closeBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+closeBtn.Text = "Fechar"
+closeBtn.Font = Enum.Font.Gotham
+closeBtn.TextSize = 20
+closeBtn.TextColor3 = Color3.fromRGB(255,255,255)
+closeBtn.Parent = container
+local closeCorner = Instance.new("UICorner", closeBtn)
+closeCorner.CornerRadius = UDim.new(0, 8)
+
+-- Animação: fade-in do container
+container.BackgroundTransparency = 1
+label.TextTransparency = 1
+background.BackgroundTransparency = 1
+
+local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+TweenService:Create(background, tweenInfo, {BackgroundTransparency = 0.6}):Play()
+TweenService:Create(container, tweenInfo, {BackgroundTransparency = 0.05}):Play()
+TweenService:Create(label, tweenInfo, {TextTransparency = 0}):Play()
+
+-- Fechar ao clicar
+closeBtn.MouseButton1Click:Connect(function()
+	local outTweenInfo = TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
+	TweenService:Create(background, outTweenInfo, {BackgroundTransparency = 1}):Play()
+	TweenService:Create(container, outTweenInfo, {BackgroundTransparency = 1}):Play()
+	TweenService:Create(label, outTweenInfo, {TextTransparency = 1}):Play()
+	wait(0.45)
+	screenGui:Destroy()
+end)
+
+-- Fechar ao pressionar Esc (opcional)
+local ContextActionService = game:GetService("ContextActionService")
+local function fecharAction(name, state, input)
+	if state == Enum.UserInputState.Begin then
+		if screenGui and screenGui.Parent then
+			screenGui:Destroy()
+		end
+	end
+end
+ContextActionService:BindAction("FecharZandonaGui", fecharAction, false, Enum.KeyCode.Escape)
